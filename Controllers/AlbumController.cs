@@ -25,10 +25,7 @@ namespace AlbumApi.Controllers
         public IEnumerable<Album> BuscarValores()
         {
 
-            foreach (var item in _context.album)
-            {
-                yield return item;
-            }
+            return _context.album.Include(p => p.Musicas).ToList();
         }
 
 

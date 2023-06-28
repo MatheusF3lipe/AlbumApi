@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var ConnectionString = builder.Configuration.GetConnectionString("AlbumConnection");
 builder.Services.AddDbContext<AlbumContext>(opts => opts.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString)));
+
+
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Add services to the container.
 
