@@ -14,7 +14,6 @@ namespace AlbumApi.Models
         public string? Titulo { get; set; }
         public string? Genero { get; set; }
         public string? Banda { get; set; }
-        [ForeignKey("Id")]
         public virtual IEnumerable<Musica>? Musicas { get; set; }
     }
 }

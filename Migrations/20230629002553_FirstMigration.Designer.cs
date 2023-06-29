@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlbumApi.Migrations
 {
     [DbContext(typeof(AlbumContext))]
-    [Migration("20230627235023_Correcao2")]
-    partial class Correcao2
+    [Migration("20230629002553_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

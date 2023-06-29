@@ -40,14 +40,20 @@ namespace AlbumApi.Migrations
 
             modelBuilder.Entity("AlbumApi.Models.Musica", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdMusica")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlbumId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdMusica");
+
+                    b.HasIndex("AlbumId");
 
                     b.ToTable("Musica");
                 });
@@ -56,7 +62,7 @@ namespace AlbumApi.Migrations
                 {
                     b.HasOne("AlbumApi.Models.Album", null)
                         .WithMany("Musicas")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

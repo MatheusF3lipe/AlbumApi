@@ -45,6 +45,8 @@ namespace AlbumApi.Controllers
             // Vai criar um objeto baseado no mapeamento e a transformação do Albumdto para album
             Album album = _mapper.Map<Album>(albumDto);
             _context.album.Add(album);
+            _context.Set<Album>().AsNoTracking();
+
             _context.SaveChanges();
         }
 

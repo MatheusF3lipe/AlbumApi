@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AlbumApi.Migrations
 {
     /// <inheritdoc />
-    public partial class Correcao : Migration
+    public partial class SecondMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,7 +28,8 @@ namespace AlbumApi.Migrations
                 name: "AlbumId",
                 table: "Musica",
                 type: "int",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Musica_AlbumId",
@@ -40,7 +41,8 @@ namespace AlbumApi.Migrations
                 table: "Musica",
                 column: "AlbumId",
                 principalTable: "album",
-                principalColumn: "Id");
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
