@@ -9,6 +9,8 @@ namespace AlbumApi.Profiles
         public AlbumProfile()
         {
             CreateMap<CreateAlbumDto, Album>().ReverseMap();
+            CreateMap<Album, ReadingAlbumDto>().ReverseMap();
+            CreateMap<UpdateAlbum, Album>().ReverseMap();
         }
     }
 }
