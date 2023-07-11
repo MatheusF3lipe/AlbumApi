@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Text.Json;
+﻿
 using AlbumApi.Data;
 using AlbumApi.Data.Dtos;
 using AlbumApi.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -76,6 +76,24 @@ namespace AlbumApi.Controllers
         }
 
         [HttpPatch("{id}")]
+
+        public IActionResult AtualizarParte(int id, JsonPatchDocument<UpdateAlbum> patch)
+        {
+            var updateAlbum = _context.album.FirstOrDefault(x => x.Id == id);
+            if (updateAlbum == null) return NotFound();
+
+
+            var AlbumParaAtualizar = _mapper.Map<UpdateAlbum>(updateAlbum);
+            patch.ApplyTo(AlbumParaAtualizar, ModelState);
+
+            if (!TryValidateModel(AlbumParaAtualizar))
+            {
+                return ValidationProblem(ModelState);
+            }
+            _mapper.Map(AlbumParaAtualizar, updateAlbum);
+            _context.SaveChanges();
+            return NoContent();
+        }
 
     }
 }
