@@ -10,6 +10,7 @@ namespace AlbumApi.Data
 
         }
         public DbSet<Album> album { get; set; }
+        public DbSet<Musica> musica { get; set; }
 
     }
 }

@@ -7,9 +7,10 @@ namespace AlbumApi.Models
     {
 
         [Key]
-        public int IdMusica { get; set; }
+        [Required]
+        public int Id { get; set; }
         public String Nome { get; set; }
-        [ForeignKey("Id")]
         public int AlbumId { get; set; }
+        public virtual Album Album { get; set; }
     }
 }
