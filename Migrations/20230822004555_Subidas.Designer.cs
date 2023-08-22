@@ -2,6 +2,7 @@
 using AlbumApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlbumApi.Migrations
 {
     [DbContext(typeof(AlbumContext))]
-    partial class AlbumContextModelSnapshot : ModelSnapshot
+    [Migration("20230822004555_Subidas")]
+    partial class Subidas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,15 +31,12 @@ namespace AlbumApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Banda")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Genero")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Titulo")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -66,13 +66,13 @@ namespace AlbumApi.Migrations
 
             modelBuilder.Entity("AlbumApi.Models.Musica", b =>
                 {
-                    b.HasOne("AlbumApi.Models.Album", "album")
+                    b.HasOne("AlbumApi.Models.Album", "Album")
                         .WithMany("Musicas")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("album");
+                    b.Navigation("Album");
                 });
 
             modelBuilder.Entity("AlbumApi.Models.Album", b =>

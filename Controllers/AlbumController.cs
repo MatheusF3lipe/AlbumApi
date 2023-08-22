@@ -23,10 +23,10 @@ namespace AlbumApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ReadingAlbumDto> BuscarValores([FromQuery] int skip = 0, int take = 0)
+        public IEnumerable<ReadingAlbumDto> BuscarValores()
         {
 
-            return _mapper.Map<List<ReadingAlbumDto>>(_context.album.Include(x => x.Musicas).Skip(skip).Take(take));
+            return _mapper.Map<List<ReadingAlbumDto>>(_context.album.ToList());
         }
 
         [HttpGet("{id}")]
@@ -47,51 +47,51 @@ namespace AlbumApi.Controllers
             _context.SaveChanges();
         }
 
-        [HttpDelete("{id}")]
+        //[HttpDelete("{id}")]
 
-        public IActionResult removerId(int id)
-        {
-            var albumDto = _context.album.FirstOrDefault(a => a.Id == id);
-            if (albumDto == null) return NotFound();
-            _context.Remove(albumDto);
-            _context.SaveChanges();
-            return NoContent();
-        }
+        //public IActionResult removerId(int id)
+        //{
+        //    var albumDto = _context.album.FirstOrDefault(a => a.Id == id);
+        //    if (albumDto == null) return NotFound();
+        //    _context.Remove(albumDto);
+        //    _context.SaveChanges();
+        //    return NoContent();
+        //}
 
-        [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, [FromBody] UpdateAlbum updateAlbumDto)
-        {
-            var albumAtualizado = _context.album.FirstOrDefault(x => x.Id == id);
+        //[HttpPut("{id}")]
+        //public IActionResult Atualizar(int id, [FromBody] UpdateAlbum updateAlbumDto)
+        //{
+        //    var albumAtualizado = _context.album.FirstOrDefault(x => x.Id == id);
 
-            if (albumAtualizado == null)
-            {
-                return NotFound();
-                Console.WriteLine("Falhou aqui");
-            }
-            _mapper.Map(updateAlbumDto, albumAtualizado);
-            _context.SaveChanges();
-            return NoContent();
-        }
+        //    if (albumAtualizado == null)
+        //    {
+        //        return NotFound();
+        //        Console.WriteLine("Falhou aqui");
+        //    }
+        //    _mapper.Map(updateAlbumDto, albumAtualizado);
+        //    _context.SaveChanges();
+        //    return NoContent();
+        //}
 
-        [HttpPatch("{id}")]
+        //[HttpPatch("{id}")]
 
-        public IActionResult AtualizarParte(int id, JsonPatchDocument<UpdateAlbum> patch)
-        {
-            var updateAlbum = _context.album.FirstOrDefault(x => x.Id == id);
-            if (updateAlbum == null) return NotFound();
+        //public IActionResult AtualizarParte(int id, JsonPatchDocument<UpdateAlbum> patch)
+        //{
+        //    var updateAlbum = _context.album.FirstOrDefault(x => x.Id == id);
+        //    if (updateAlbum == null) return NotFound();
 
 
-            var AlbumParaAtualizar = _mapper.Map<UpdateAlbum>(updateAlbum);
-            patch.ApplyTo(AlbumParaAtualizar, ModelState);
+        //    var AlbumParaAtualizar = _mapper.Map<UpdateAlbum>(updateAlbum);
+        //    patch.ApplyTo(AlbumParaAtualizar, ModelState);
 
-            if (!TryValidateModel(AlbumParaAtualizar))
-            {
-                return ValidationProblem(ModelState);
-            }
-            _mapper.Map(AlbumParaAtualizar, updateAlbum);
-            _context.Update(updateAlbum);
-            return NoContent();
-        }
+        //    if (!TryValidateModel(AlbumParaAtualizar))
+        //    {
+        //        return ValidationProblem(ModelState);
+        //    }
+        //    _mapper.Map(AlbumParaAtualizar, updateAlbum);
+        //    _context.Update(updateAlbum);
+        //    return NoContent();
+        //}
 
     }
 }

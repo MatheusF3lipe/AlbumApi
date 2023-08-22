@@ -31,7 +31,7 @@ namespace AlbumApi.Controllers
         [HttpGet]
         public IEnumerable<ReadingMusicaDto> retonoMusica()
         {
-            return _mapper.Map<List<ReadingMusicaDto>>(_context.musica);
+            return _mapper.Map<List<ReadingMusicaDto>>(_context.musica.ToList());
         }
 
     };

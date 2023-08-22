@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlbumApi.Migrations
 {
     [DbContext(typeof(AlbumContext))]
-    [Migration("20230629010631_SecondMigration")]
-    partial class SecondMigration
+    [Migration("20230822010104_Subidassa")]
+    partial class Subidassa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,6 +19,9 @@ namespace AlbumApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("AlbumApi.Models.Album", b =>
@@ -58,16 +61,18 @@ namespace AlbumApi.Migrations
 
                     b.HasIndex("AlbumId");
 
-                    b.ToTable("Musica");
+                    b.ToTable("musica");
                 });
 
             modelBuilder.Entity("AlbumApi.Models.Musica", b =>
                 {
-                    b.HasOne("AlbumApi.Models.Album", null)
+                    b.HasOne("AlbumApi.Models.Album", "Album")
                         .WithMany("Musicas")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Album");
                 });
 
             modelBuilder.Entity("AlbumApi.Models.Album", b =>

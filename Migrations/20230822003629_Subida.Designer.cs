@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlbumApi.Migrations
 {
     [DbContext(typeof(AlbumContext))]
-    [Migration("20230629011053_ThirdMigration")]
-    partial class ThirdMigration
+    [Migration("20230822003629_Subida")]
+    partial class Subida
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,6 +19,9 @@ namespace AlbumApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("AlbumApi.Models.Album", b =>
@@ -43,7 +46,7 @@ namespace AlbumApi.Migrations
 
             modelBuilder.Entity("AlbumApi.Models.Musica", b =>
                 {
-                    b.Property<int>("IdMusica")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -54,20 +57,22 @@ namespace AlbumApi.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("IdMusica");
+                    b.HasKey("Id");
 
                     b.HasIndex("AlbumId");
 
-                    b.ToTable("Musica");
+                    b.ToTable("musica");
                 });
 
             modelBuilder.Entity("AlbumApi.Models.Musica", b =>
                 {
-                    b.HasOne("AlbumApi.Models.Album", null)
+                    b.HasOne("AlbumApi.Models.Album", "Album")
                         .WithMany("Musicas")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Album");
                 });
 
             modelBuilder.Entity("AlbumApi.Models.Album", b =>

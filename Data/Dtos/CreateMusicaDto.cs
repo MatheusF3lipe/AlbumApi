@@ -6,7 +6,6 @@ namespace AlbumApi.Data.Dtos
     {
         [Required]
         public String Nome { get; set; }
-        [Required]
         public int AlbumId { get; set; }
     }
 }

@@ -9,8 +9,7 @@ namespace AlbumApi.Profiles
         public AlbumProfile()
         {
             CreateMap<CreateAlbumDto, Album>();
-            CreateMap<Album, ReadingAlbumDto>().ForMember(musicadt => musicadt.Musicas, opt => opt.MapFrom(Album => Album.Musicas));
-            CreateMap<UpdateAlbum, Album>();
+            CreateMap<Album, ReadingAlbumDto>();
         }
     }
 }

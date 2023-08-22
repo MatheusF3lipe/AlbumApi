@@ -9,8 +9,9 @@ namespace AlbumApi.Models
         [Key]
         [Required]
         public int Id { get; set; }
-        public String Nome { get; set; }
+        public string Nome { get; set; }
+        [Required]
         public int AlbumId { get; set; }
-        public virtual Album Album { get; set; }
+        public virtual Album album { get; set; }
     }
 }
