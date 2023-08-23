@@ -33,6 +33,14 @@ namespace AlbumApi.Controllers
         {
             return _mapper.Map<List<ReadingMusicaDto>>(_context.musica.ToList());
         }
-
+        [HttpPut("{id}")]
+        public IActionResult AtualizarMusica(int id, [FromBody] UpdateMusicaDto updateMusica)
+        {
+            var musicaDt = _context.musica.FirstOrDefault(musica => musica.Id == id);
+            if (musicaDt == null) return NotFound();
+            _mapper.Map(updateMusica, musicaDt);
+            _context.SaveChanges();
+            return Ok();
+        }
     };
 }

@@ -47,31 +47,26 @@ namespace AlbumApi.Controllers
             _context.SaveChanges();
         }
 
-        //[HttpDelete("{id}")]
+        [HttpDelete("{id}")]
 
-        //public IActionResult removerId(int id)
-        //{
-        //    var albumDto = _context.album.FirstOrDefault(a => a.Id == id);
-        //    if (albumDto == null) return NotFound();
-        //    _context.Remove(albumDto);
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+        public IActionResult removerId(int id)
+        {
+            var albumDto = _context.album.FirstOrDefault(a => a.Id == id);
+            if (albumDto == null) return NotFound();
+            _context.Remove(albumDto);
+            _context.SaveChanges();
+            return NoContent();
+        }
 
-        //[HttpPut("{id}")]
-        //public IActionResult Atualizar(int id, [FromBody] UpdateAlbum updateAlbumDto)
-        //{
-        //    var albumAtualizado = _context.album.FirstOrDefault(x => x.Id == id);
-
-        //    if (albumAtualizado == null)
-        //    {
-        //        return NotFound();
-        //        Console.WriteLine("Falhou aqui");
-        //    }
-        //    _mapper.Map(updateAlbumDto, albumAtualizado);
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+        [HttpPut("{id}")]
+        public IActionResult Atualizar(int id, [FromBody] UpdateAlbumDto albumDto)
+        {
+            var album = _context.album.FirstOrDefault(a => a.Id == id);
+            if (album == null) return NotFound();
+            _mapper.Map(albumDto, album);
+            _context.SaveChanges();
+            return Ok();
+        }
 
         //[HttpPatch("{id}")]
 

@@ -10,6 +10,8 @@ namespace AlbumApi.Profiles
         {
             CreateMap<CreateAlbumDto, Album>();
             CreateMap<Album, ReadingAlbumDto>();
+            CreateMap<UpdateAlbumDto, Album>();
+            CreateMap<Album, ReadNomeAlbum>().ForMember(x => x.Nome, opt => opt.MapFrom(album => album.Titulo));
         }
     }
 }
