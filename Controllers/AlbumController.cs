@@ -25,7 +25,6 @@ namespace AlbumApi.Controllers
         [HttpGet]
         public IEnumerable<ReadingAlbumDto> BuscarValores()
         {
-
             return _mapper.Map<List<ReadingAlbumDto>>(_context.album.ToList());
         }
 
@@ -37,6 +36,24 @@ namespace AlbumApi.Controllers
             var RetornoAlbumDto = _mapper.Map<Album>(albumDto);
             return Ok(RetornoAlbumDto);
         }
+
+        [HttpGet("generos/{AlbumGenero}")]
+        public IActionResult BuscarAlbumGenero(string AlbumGenero)
+        {
+            if (AlbumGenero == null) return NotFound();
+            var retorno = _mapper.Map<List<ReadingAlbumDto>>(_context.album.Where(album => album.Genero.Equals(AlbumGenero)).ToList());
+            return Ok(retorno);
+        }
+
+        [HttpGet("titulo")]
+        public IActionResult BuscarAlbumTitulo([FromQuery] string? AlbumTitulo)
+        {
+            if (AlbumTitulo == null) return NotFound();
+            var retorno = _mapper.Map<List<ReadingAlbumDto>>(_context.album.Where(album => album.Titulo.Equals(AlbumTitulo)).ToList());
+            return Ok(retorno);
+        }
+
+
 
         [HttpPost]
         public void CreateAlbum([FromBody] CreateAlbumDto albumDto)
