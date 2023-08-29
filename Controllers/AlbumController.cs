@@ -48,12 +48,14 @@ namespace AlbumApi.Controllers
         [HttpGet("titulo")]
         public IActionResult BuscarAlbumTitulo([FromQuery] string? AlbumTitulo)
         {
-            if (AlbumTitulo == null) return NotFound();
-            var retorno = _mapper.Map<List<ReadingAlbumDto>>(_context.album.Where(album => album.Titulo.Equals(AlbumTitulo)).ToList());
-            return Ok(retorno);
+            var busca = _context.album.FirstOrDefault(album => album.Titulo.Equals(AlbumTitulo));
+            if (busca == null)
+            {
+                return NotFound();
+            }
+            var tituloMapeado = _mapper.Map<ReadingAlbumDto>(busca);
+            return Ok(tituloMapeado);
         }
-
-
 
         [HttpPost]
         public void CreateAlbum([FromBody] CreateAlbumDto albumDto)
@@ -85,25 +87,26 @@ namespace AlbumApi.Controllers
             return Ok();
         }
 
-        //[HttpPatch("{id}")]
+        [HttpPatch("{id}")]
 
-        //public IActionResult AtualizarParte(int id, JsonPatchDocument<UpdateAlbum> patch)
-        //{
-        //    var updateAlbum = _context.album.FirstOrDefault(x => x.Id == id);
-        //    if (updateAlbum == null) return NotFound();
+        public IActionResult AtualizarParte(int id, [FromBody] JsonPatchDocument<UpdateAlbumDto> patch)
+        {
+            // Localizou no id
+            var album = _context.album.FirstOrDefault(x => x.Id == id);
+            // Realizou a validação
+            if (album == null) return NotFound();
+            // Mapeamento isolado para o data transfer
+            var AlbumParaAtualizar = _mapper.Map<UpdateAlbumDto>(album);
+            //Aplicou as alterações novas
+            patch.ApplyTo(AlbumParaAtualizar, ModelState);
 
-
-        //    var AlbumParaAtualizar = _mapper.Map<UpdateAlbum>(updateAlbum);
-        //    patch.ApplyTo(AlbumParaAtualizar, ModelState);
-
-        //    if (!TryValidateModel(AlbumParaAtualizar))
-        //    {
-        //        return ValidationProblem(ModelState);
-        //    }
-        //    _mapper.Map(AlbumParaAtualizar, updateAlbum);
-        //    _context.Update(updateAlbum);
-        //    return NoContent();
-        //}
-
+            if (!TryValidateModel(AlbumParaAtualizar))
+            {
+                return ValidationProblem(ModelState);
+            }
+            _mapper.Map(AlbumParaAtualizar, album);
+            _context.SaveChanges();
+            return NoContent();
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace AlbumApi.Profiles
             CreateMap<CreateMusicaDto, Musica>();
             CreateMap<Musica, ReadingMusicaDto>();
             CreateMap<UpdateMusicaDto, Musica>();
+            CreateMap<Musica, UpdateMusicaDto>();
 
         }
     }

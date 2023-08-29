@@ -2,6 +2,7 @@
 using AlbumApi.Data.Dtos;
 using AlbumApi.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbumApi.Controllers
@@ -41,6 +42,22 @@ namespace AlbumApi.Controllers
             _mapper.Map(updateMusica, musicaDt);
             _context.SaveChanges();
             return Ok();
+        }
+        [HttpPatch("{id}")]
+        public IActionResult AtualizarParcialMusica(int id, [FromBody] JsonPatchDocument<UpdateMusicaDto> patch)
+        {
+            Musica musica = _context.musica.FirstOrDefault(x => x.Id == id);
+            if (musica == null) return NotFound();
+            // Mapeamento isolado
+            var MusicaAtualizada = _mapper.Map<UpdateMusicaDto>(musica);
+            patch.ApplyTo(MusicaAtualizada, ModelState);
+            if (!TryValidateModel(MusicaAtualizada))
+            {
+                return ValidationProblem(ModelState);
+            }
+            _mapper.Map(MusicaAtualizada, musica);
+            _context.SaveChanges();
+            return Ok(ModelState);
         }
     };
 }
